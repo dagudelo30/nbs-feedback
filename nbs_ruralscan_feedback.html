@@ -37,13 +37,26 @@
   }
 
   .layout{ flex:1; display:flex; min-height:0; }
-  .viewer{ flex:1.5; min-width:0; display:flex; flex-direction:column; border-right:1px solid var(--line); background:#e7e9e4; }
+  .viewer{ flex:1.5; min-width:0; display:flex; flex-direction:column; border-right:1px solid var(--line); background:#e7e9e4; position:relative; }
   .viewer .viewer-bar{
     background:var(--sand-panel); border-bottom:1px solid var(--line); padding:10px 14px;
     font-size:13px; color:var(--forest); display:flex; align-items:center; gap:8px; font-weight:600;
   }
   .viewer-bar .dot{ width:8px;height:8px;border-radius:50%; background:var(--clay); flex:none; }
   .viewer iframe{ flex:1; width:100%; border:none; background:#fff; }
+
+  .viewer-cover{
+    position:absolute; inset:0; z-index:5;
+    background:var(--forest);
+    display:flex; align-items:center; justify-content:center;
+    transition:opacity .25s ease;
+  }
+  .viewer-cover.hidden{ opacity:0; pointer-events:none; }
+  .viewer-cover-inner{ text-align:center; color:#eef4f1; padding:20px; max-width:420px; }
+  .vc-eyebrow{ font-size:11.5px; letter-spacing:.5px; color:#a9c2b7; text-transform:uppercase; margin-bottom:14px; }
+  .viewer-cover-inner h1{ font-size:34px; margin:0 0 6px 0; font-weight:700; letter-spacing:-.5px; }
+  .viewer-cover-inner p{ font-size:16px; margin:0 0 22px 0; color:#cfe0d8; }
+  .vc-hint{ font-size:12.5px; color:#9db9ac; border-top:1px solid rgba(255,255,255,.15); padding-top:16px; display:inline-block; }
 
   .feedback{
     flex:1; max-width:460px; min-width:340px; display:flex; flex-direction:column;
@@ -58,6 +71,12 @@
   }
   .progress .pd.done{ background:var(--ok); }
   .progress .pd.current{ background:var(--clay); }
+
+  .start-hero{ text-align:center; margin-bottom:22px; }
+  .start-hero h2{
+    font-size:24px; margin:0 0 8px 0; color:var(--forest); font-weight:700; letter-spacing:-.3px;
+  }
+  .start-hero p{ font-size:13.5px; color:var(--muted); margin:0; }
 
   .howto{
     background:var(--clay-soft); border:1px solid #e6c9a4; border-radius:var(--radius);
@@ -89,6 +108,7 @@
 
   .question{ margin-bottom:20px; }
   .question p{ font-size:13px; margin:0 0 8px 0; line-height:1.4; }
+  .req-star{ color:var(--clay); font-weight:700; }
 
   .scale{ display:flex; align-items:center; gap:6px; }
   .scale .opt{ flex:1; text-align:center; }
@@ -158,12 +178,20 @@
 
 <div class="layout">
 
-  <div class="viewer">
+  <div class="viewer" id="viewerPanel">
     <div class="viewer-bar" id="viewerBar">
       <span class="dot"></span>
       <span id="viewerBarText">Browse the live tool on this side.</span>
     </div>
     <iframe id="wireframeFrame" src="wireframe.html" title="Rural NbS Scan wireframe" loading="eager"></iframe>
+    <div class="viewer-cover" id="viewerCover">
+      <div class="viewer-cover-inner">
+        <div class="vc-eyebrow">D591 · World Bank · Alliance Bioversity &amp; CIAT</div>
+        <h1>NbS Rural Scan</h1>
+        <p>Visualization feedback</p>
+        <span class="vc-hint">The tool will appear here once you press Start →</span>
+      </div>
+    </div>
   </div>
 
   <div class="feedback">
@@ -171,15 +199,13 @@
 
       <!-- START SCREEN -->
       <div class="screen active" id="screenStart">
+        <div class="start-hero">
+          <h2>NbS Visualization Feedback</h2>
+          <p>A quick, guided review of the Rural NbS Scan wireframe — tab by tab.</p>
+        </div>
         <div class="howto">
           <strong>How this works</strong>
-          You'll go through the tool tab by tab. The left side switches tabs automatically as you progress; each screen here asks about the tab currently showing. At the end you'll submit everything in one go.
-          <ol>
-            <li>Enter your name and email below.</li>
-            <li>Press Start — the left panel jumps to the first tab.</li>
-            <li>Answer the questions on the right for that tab.</li>
-            <li>"Next" unlocks once the rating questions are answered, and moves the left panel to the next tab.</li>
-          </ol>
+          Enter your name and email, then press Start. The tool will appear on the left and move tab by tab as you answer — no need to click anything over there yourself.
         </div>
         <div class="identity">
           <div class="field">
@@ -329,6 +355,7 @@
     responses.name = name;
     responses.email = email;
     statusEl.textContent = "";
+    document.getElementById('viewerCover').classList.add('hidden');
     currentIndex = 0;
     renderStep();
     showScreen('screenStep');
@@ -366,7 +393,7 @@
       qDiv.dataset.name = q.name;
 
       const p = document.createElement('p');
-      p.textContent = q.prompt;
+      p.innerHTML = q.prompt + ' <span class="req-star">*</span>';
       qDiv.appendChild(p);
 
       if(q.type === 'scale'){
@@ -401,11 +428,17 @@
         warn.textContent = 'Please select a rating before continuing.';
         qDiv.appendChild(warn);
       } else {
+        qDiv.dataset.required = "true";
         const ta = document.createElement('textarea');
         ta.name = q.name;
-        ta.placeholder = 'Optional comment';
+        ta.placeholder = 'Your answer';
         ta.value = responses[q.name] || '';
+        ta.addEventListener('input', () => qDiv.classList.remove('invalid'));
         qDiv.appendChild(ta);
+        const warnT = document.createElement('div');
+        warnT.className = 'scale-warning';
+        warnT.textContent = 'Please answer before continuing.';
+        qDiv.appendChild(warnT);
       }
       container.appendChild(qDiv);
     });
@@ -430,10 +463,18 @@
     const step = STEPS[currentIndex];
     let valid = true;
     step.questions.forEach(q => {
+      const qDiv = document.querySelector('.question[data-name="' + q.name + '"]');
       if(q.type === 'scale'){
         const checked = document.querySelector('input[name="' + q.name + '"]:checked');
-        const qDiv = document.querySelector('.question[data-name="' + q.name + '"]');
         if(!checked){
+          valid = false;
+          qDiv.classList.add('invalid');
+        } else {
+          qDiv.classList.remove('invalid');
+        }
+      } else {
+        const ta = document.querySelector('textarea[name="' + q.name + '"]');
+        if(!ta || !ta.value.trim()){
           valid = false;
           qDiv.classList.add('invalid');
         } else {
@@ -448,6 +489,7 @@
     saveStep();
     if(currentIndex === 0){
       currentIndex = -1;
+      document.getElementById('viewerCover').classList.remove('hidden');
       showScreen('screenStart');
       return;
     }
@@ -496,6 +538,7 @@
     currentIndex = -1;
     document.getElementById('fName').value = '';
     document.getElementById('fEmail').value = '';
+    document.getElementById('viewerCover').classList.remove('hidden');
     showScreen('screenStart');
   }
 </script>
