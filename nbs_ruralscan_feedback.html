@@ -250,57 +250,60 @@
     {
       key:'setup', num:'01', tab:'01 Setup', tabId:'tab-setup',
       questions:[
-        {type:'scale', name:'setup_clarity', prompt:"It's clear what each choice (NbS, geographic scope, resolution, climate mode) will change in the analysis.", lo:'Strongly disagree', hi:'Strongly agree'},
-        {type:'scale', name:'setup_defaults', prompt:'The recommended defaults (e.g. 5 km resolution, Mode A, Baseline + SSP2-4.5) feel like the right starting point for a first pass.', lo:'Strongly disagree', hi:'Strongly agree'},
-        {type:'text', name:'setup_comment', prompt:'Is there any configuration option missing that your team would need?'}
+        {type:'scale', name:'setup_rating', prompt:"It's clear what each choice (NbS, geographic scope, resolution, climate mode) will change in the analysis.", lo:'Strongly disagree', hi:'Strongly agree'},
+        {type:'text', name:'setup_likes', prompt:"What's working well in this tab — anything that's clear, useful, or well laid out?"},
+        {type:'text', name:'setup_improve', prompt:"What's confusing, missing, or would you change in this tab, and why?"}
       ]
     },
     {
       key:'opportunity', num:'02', tab:'02 Opportunity Space', tabId:'tab-opp',
       questions:[
-        {type:'scale', name:'opportunity_map', prompt:'The suitability map and the VH/H/M/L/X classes make it easy to see where an NbS could plausibly work.', lo:'Strongly disagree', hi:'Strongly agree'},
-        {type:'scale', name:'opportunity_levers', prompt:'The distinction between hard exclusions (masks) and reversible soft scenario levers (road/electrification) is clear and useful for framing an investment conversation.', lo:'Strongly disagree', hi:'Strongly agree'},
-        {type:'text', name:'opportunity_comment', prompt:'Any comments on the opportunity fingerprint or the climate-risk-to-livelihoods panel?'}
+        {type:'scale', name:'opportunity_rating', prompt:'The suitability map and the VH/H/M/L/X classes make it easy to see where an NbS could plausibly work.', lo:'Strongly disagree', hi:'Strongly agree'},
+        {type:'text', name:'opportunity_likes', prompt:"What's working well in this tab — anything that's clear, useful, or well laid out?"},
+        {type:'text', name:'opportunity_improve', prompt:"What's confusing, missing, or would you change in this tab, and why?"}
       ]
     },
     {
       key:'risk', num:'03', tab:'03 Project Risk', tabId:'tab-prisk',
       questions:[
-        {type:'scale', name:'risk_distinction', prompt:'The difference between "risk to the NbS asset" (this tab) and "risk to rural livelihoods" (Opportunity Space) is clear on first read.', lo:'Strongly disagree', hi:'Strongly agree'},
-        {type:'scale', name:'risk_usefulness', prompt:'The overall project-risk rating and the operational feasibility filters (access, tenure, FPIC, finance...) give you what you would need to flag a site as risky.', lo:'Strongly disagree', hi:'Strongly agree'},
-        {type:'text', name:'risk_comment', prompt:'Any comments on this tab?'}
+        {type:'scale', name:'risk_rating', prompt:'The difference between "risk to the NbS asset" (this tab) and "risk to rural livelihoods" (Opportunity Space) is clear.', lo:'Strongly disagree', hi:'Strongly agree'},
+        {type:'text', name:'risk_likes', prompt:"What's working well in this tab — anything that's clear, useful, or well laid out?"},
+        {type:'text', name:'risk_improve', prompt:"What's confusing, missing, or would you change in this tab, and why?"}
       ]
     },
     {
       key:'hotspots', num:'04', tab:'04 Priority Hotspots', tabId:'tab-hotspot',
       questions:[
-        {type:'scale', name:'hotspots_profiles', prompt:'The priority profiles (Climate adaptation, Livelihood, Biodiversity, Balanced) and their weights are a sensible starting point for a TTL.', lo:'Strongly disagree', hi:'Strongly agree'},
-        {type:'scale', name:'hotspots_ranking', prompt:'The ranked district list and the "Why [district] is #1" breakdown give enough justification to defend a site selection.', lo:'Strongly disagree', hi:'Strongly agree'},
-        {type:'text', name:'hotspots_comment', prompt:'Any comments on the weighting sliders, descriptor filters, or the gender-inequity flag?'}
+        {type:'scale', name:'hotspots_rating', prompt:'The ranked district list and the priority weights would help you defend a site-selection decision to a task team.', lo:'Strongly disagree', hi:'Strongly agree'},
+        {type:'text', name:'hotspots_likes', prompt:"What's working well in this tab — anything that's clear, useful, or well laid out?"},
+        {type:'text', name:'hotspots_improve', prompt:"What's confusing, missing, or would you change in this tab, and why?"}
       ]
     },
     {
       key:'comparison', num:'05', tab:'05 NbS Comparison', tabId:'tab-compare',
       questions:[
-        {type:'scale', name:'comparison_matrix', prompt:'The side-by-side comparison (spatial overlap, climate resilience, cost-effectiveness) makes it easier to choose between candidate NbS.', lo:'Strongly disagree', hi:'Strongly agree'},
-        {type:'scale', name:'comparison_likeforlike', prompt:'Keeping area-based NbS and linear/zonal NbS (e.g. riparian buffers) visually separate, rather than ranked together, is the right call.', lo:'Strongly disagree', hi:'Strongly agree'},
-        {type:'text', name:'comparison_comment', prompt:'Any comments on this tab?'}
+        {type:'scale', name:'comparison_rating', prompt:'The side-by-side comparison (spatial overlap, climate resilience, cost-effectiveness) makes it easier to choose between candidate NbS.', lo:'Strongly disagree', hi:'Strongly agree'},
+        {type:'text', name:'comparison_likes', prompt:"What's working well in this tab — anything that's clear, useful, or well laid out?"},
+        {type:'text', name:'comparison_improve', prompt:"What's confusing, missing, or would you change in this tab, and why?"}
       ]
     },
     {
       key:'nextsteps', num:'06', tab:'06 Next Steps', tabId:'tab-next',
       questions:[
-        {type:'scale', name:'nextsteps_pathway', prompt:'The pathway from scoping to pre-feasibility and feasibility (cost-benefit, FPIC/safeguards hand-off, M&E baseline) is clear and actionable.', lo:'Strongly disagree', hi:'Strongly agree'},
-        {type:'scale', name:'nextsteps_scopeclarity', prompt:"It's clear that this tool stops at scoping, and a full feasibility assessment is separate downstream work.", lo:'Strongly disagree', hi:'Strongly agree'},
-        {type:'text', name:'nextsteps_comment', prompt:'Any comments on the FPIC/safeguards hand-off or the flagged data gaps?'}
+        {type:'scale', name:'nextsteps_rating', prompt:'The pathway from scoping to pre-feasibility and feasibility is clear and actionable.', lo:'Strongly disagree', hi:'Strongly agree'},
+        {type:'text', name:'nextsteps_likes', prompt:"What's working well in this tab — anything that's clear, useful, or well laid out?"},
+        {type:'text', name:'nextsteps_improve', prompt:"What's confusing, missing, or would you change in this tab, and why?"}
       ]
     },
     {
       key:'general', num:'GN', tab:null,
       questions:[
         {type:'scale', name:'general_usefulness', prompt:'Overall, how useful would this tool be for your work as a TTL?', lo:'Not useful at all', hi:'Very useful'},
-        {type:'text', name:'general_change', prompt:"What is the one thing you'd change first?"},
-        {type:'text', name:'general_comment', prompt:'Any other general comments?'}
+        {type:'text', name:'general_missing', prompt:"Is there any feature, data view, or functionality you expected to see that's missing? (e.g. exporting results, cross-country comparison, an API, methodology documentation)"},
+        {type:'text', name:'general_favorite', prompt:'Of the six tabs, which is most valuable for your work — and which is least?'},
+        {type:'text', name:'general_patterns_like', prompt:"Are there UI/UX patterns from other geospatial or decision-support platforms you'd like to see here? (e.g. World Bank Climate Change Knowledge Portal, WRI Aqueduct, Africa GeoPortal, Global Forest Watch — links/screenshots welcome)"},
+        {type:'text', name:'general_patterns_avoid', prompt:"Anything from other platforms you think we should avoid?"},
+        {type:'text', name:'general_comment', prompt:'Any final comments?'}
       ]
     }
   ];
