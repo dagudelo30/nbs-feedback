@@ -230,7 +230,7 @@
 
 <script>
   // ---- Replace this with your own Google Apps Script Web App URL ----
-  const GAS_ENDPOINT = "https://script.google.com/macros/s/AKfycbyB_hjmTcg4vhEIdFmXW50ynB910kc3SnkhU2hv89hSmOUXNaiMT5mIoWzCEITX9gEu/exec";
+  const GAS_ENDPOINT = "PASTE_YOUR_APPS_SCRIPT_URL_HERE";
 
   // Real tab button ids from wireframe.html — confirmed from source (id="tab-setup", "tab-opp", etc.)
   function goToTab(tabId){
@@ -267,7 +267,7 @@
       key:'risk', num:'03', tab:'03 Project Risk', tabId:'tab-prisk',
       questions:[
         {type:'scale', name:'risk_distinction', prompt:'The difference between "risk to the NbS asset" (this tab) and "risk to rural livelihoods" (Opportunity Space) is clear on first read.', lo:'Strongly disagree', hi:'Strongly agree'},
-        {type:'scale', name:'risk_usefulness', prompt:'The overall project-risk rating and the operational feasibility filters (access, tenure, FPIC, finance...) give you what you\\'d need to flag a site as risky.', lo:'Strongly disagree', hi:'Strongly agree'},
+        {type:'scale', name:'risk_usefulness', prompt:'The overall project-risk rating and the operational feasibility filters (access, tenure, FPIC, finance...) give you what you would need to flag a site as risky.', lo:'Strongly disagree', hi:'Strongly agree'},
         {type:'text', name:'risk_comment', prompt:'Any comments on this tab?'}
       ]
     },
